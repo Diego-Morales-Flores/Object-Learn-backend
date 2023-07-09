@@ -1,9 +1,9 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity('users')
 export class User {
-    @PrimaryGeneratedColumn()
-    id: number
+    @PrimaryGeneratedColumn({name:'id_user'})
+    idUser: number
 
     @Column({ type: 'varchar', nullable: false })
     email: string;
@@ -13,4 +13,10 @@ export class User {
 
     @Column({ type: 'varchar', nullable: false, default: null })
     name: string;
+
+    @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
+    CreatedAt: Date;
+
+    @DeleteDateColumn({ name: 'deleted_at', type: 'timestamp' })
+    deletedAt?: Date;
 }
