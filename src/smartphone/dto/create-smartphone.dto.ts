@@ -1,22 +1,21 @@
-import {IsNumber, IsString} from "class-validator";
+import { IsNumber, IsString } from 'class-validator';
 
 export class CreateSmartphoneDto {
+  @IsString()
+  name: string;
 
-    @IsString()
-    name: string;
+  @IsString()
+  model: string;
 
-    @IsString()
-    model: string;
+  @IsNumber()
+  priceReferential: number;
 
-    @IsNumber()
-    priceReferential: number;
+  @IsNumber()
+  salePrice: number;
 
-    @IsNumber()
-    salePrice: number
+  @IsNumber()
+  modelYear: number;
 
-    @IsNumber()
-    modelYear: number
-
-    @IsString()
-    auditData: string
+  @IsString()
+  auditData: string;
 }
