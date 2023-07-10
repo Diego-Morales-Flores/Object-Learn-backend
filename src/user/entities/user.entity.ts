@@ -6,7 +6,8 @@ import {
   Entity,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { hash } from "typeorm/util/StringUtils";
+
+import { hash } from 'bcryptjs';
 
 @Entity('users')
 export class User {
@@ -22,6 +23,9 @@ export class User {
   @Column({ type: 'varchar', nullable: false, default: null })
   name: string;
 
+  @Column({ type: 'simple-array', default: 'STAFF' })
+  roles: string[];
+
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt: Date;
 
@@ -34,6 +38,6 @@ export class User {
     if (!this.password) {
       return;
     }
-    this.password = hash(this.password);
+    this.password = await hash(this.password, 10);
   }
 }
