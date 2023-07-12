@@ -20,7 +20,7 @@ export class User {
   @Column({ type: 'varchar', nullable: false, select: false })
   password: string;
 
-  @Column({ type: 'varchar', nullable: false, default: null })
+  @Column({ type: 'varchar', default: null })
   name: string;
 
   @Column({ type: 'simple-array', default: 'STAFF' })
