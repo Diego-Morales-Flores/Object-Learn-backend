@@ -23,9 +23,6 @@ export class SmartphoneService {
     return this.smartphoneRepository.save(newSmartphone);
   }
 
-  // async findAll() {
-  //   return await this.smartphoneRepository.find();
-  // }
   async findAll() {
     return await this.smartphoneRepository.createQueryBuilder('smartphone')
         .orderBy('smartphone.idSmartphone', 'ASC')
