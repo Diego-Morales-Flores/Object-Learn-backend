@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import {ConfigModule} from "@nestjs/config";
 import {AccessControlModule} from "nest-access-control";
 import {roles} from "./app.roles";
+import { RunCodeModule } from './run-code/run-code.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import {roles} from "./app.roles";
       DatabaseModule,
       UserModule,
       SmartphoneModule,
-      AuthModule
+      AuthModule,
+      RunCodeModule
   ],
   controllers: [AppController],
   providers: [AppService],
