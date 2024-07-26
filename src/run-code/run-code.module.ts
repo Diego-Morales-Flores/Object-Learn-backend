@@ -4,6 +4,6 @@ import { RunCodeController } from './run-code.controller';
 
 @Module({
   controllers: [RunCodeController],
-  providers: [RunCodeService]
+  providers: [RunCodeService],
 })
 export class RunCodeModule {}

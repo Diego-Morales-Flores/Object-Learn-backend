@@ -1,4 +1,9 @@
-import {BadRequestException, Inject, Injectable, NotFoundException} from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Repository } from 'typeorm';
@@ -18,9 +23,10 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto) {
     const userExist = await this.userRepository.findOneBy({
-      email: createUserDto.email
+      email: createUserDto.email,
     });
-    if (userExist) throw new BadRequestException(['this email is already registered']);
+    if (userExist)
+      throw new BadRequestException(['this email is already registered']);
     const newUser = this.userRepository.create(createUserDto);
     const user = this.userRepository.save(newUser);
     delete (await user).password;
@@ -51,10 +57,28 @@ export class UserService {
   }
 
   async findByEmail(data: UserFindByEmail) {
-    return await this.userRepository
-        .createQueryBuilder('user')
-        .where(data)
-        .addSelect('user.password')
-        .getOne();
+    return await this.userRepository.findOne({
+      where: { email: data.email },
+    });
+  }
+
+  async syncGoogleUser(createUserDto: CreateUserDto) {
+    const user = await this.findByEmail({ email: createUserDto.email });
+    if (user) {
+      return { message: 'User already exists' };
+    } else {
+      createUserDto.level = 0;
+      const newUser = await this.create(createUserDto);
+      return { message: 'New user created successfully', user: newUser };
+    }
+  }
+
+  async updateUserLevel(email: string): Promise<User> {
+    const user = await this.findByEmail({ email });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    user.level = (user.level || 0) + 1;
+    return await this.userRepository.save(user);
   }
 }

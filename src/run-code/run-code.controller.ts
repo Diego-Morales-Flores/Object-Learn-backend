@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { RunCodeService } from './run-code.service';
 import { CreateRunCodeDto } from './dto/create-run-code.dto';
 import { UpdateRunCodeDto } from './dto/update-run-code.dto';
@@ -33,7 +41,11 @@ export class RunCodeController {
   }
 
   @Post('analizar')
-  analizar(@Body('codigo') codigo: string) {
-    return this.runCodeService.analizarCodigo(codigo);
+  analizar(
+    @Body('codigo') codigo: string,
+    @Body('idUsuario') idUsuario: string,
+    @Body('idProblema') idProblema: string,
+  ) {
+    return this.runCodeService.analizarCodigo(codigo, idUsuario, idProblema);
   }
 }
